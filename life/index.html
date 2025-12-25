@@ -1,0 +1,556 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>生活 | yinzhenning's space</title><meta name="author" content="chenning yin"><meta name="copyright" content="chenning yin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="我の帖子                                                              最新感想                                               .life-page {   min-height: 100vh;   padding-bottom: 50px; }">
+<meta property="og:type" content="website">
+<meta property="og:title" content="生活">
+<meta property="og:url" content="https://yinzhenning.github.io/life/index.html">
+<meta property="og:site_name" content="yinzhenning&#39;s space">
+<meta property="og:description" content="我の帖子                                                              最新感想                                               .life-page {   min-height: 100vh;   padding-bottom: 50px; }">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yinzhenning.github.io/img/butterfly-icon.png">
+<meta property="article:published_time" content="2025-12-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-25T13:20:49.513Z">
+<meta property="article:author" content="chenning yin">
+<meta property="article:tag" content="scuer">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yinzhenning.github.io/img/butterfly-icon.png"><script type="application/ld+json"></script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://yinzhenning.github.io/life/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.3"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '生活',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/global-nav.css"><meta name="generator" content="Hexo 8.1.1"></head><body><div class="page type-life" id="body-wrap"><header class="not-home-page" id="page-header" style="background-image: url(/img/pic3.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">yinzhenning's space</span></a></span><div id="menus"><!-- 自定义搜索框和导航按钮--><div class="custom-nav-menu"><div class="nav-search-box"><input class="nav-search-input" id="search-input" type="text" placeholder="搜索文章..."><button class="nav-search-btn" id="search-btn" type="button" title="搜索"><i class="fas fa-search"></i></button><div class="nav-search-results" id="search-results"></div></div><div class="nav-buttons"><a class="nav-btn" href="/" title="首页"><i class="fas fa-home"></i></a><a class="nav-btn" href="/blog/" title="博客分类"><i class="fas fa-folder-open"></i></a><a class="nav-btn" href="/life/" title="生活"><i class="fas fa-heart"></i></a><a class="nav-btn" href="/about/" title="个人主页"><i class="fas fa-user"></i></a></div></div></div></nav><div id="page-site-info"><h1 id="site-title">生活</h1></div></header><main class="layout hide-aside" id="content-inner"><div id="page"><div class="container" id="article-container"><div class="life-page">
+  <div class="life-content">
+    <div class="life-left">
+      <div class="life-section">
+        <h2 class="section-title">我の帖子</h2>
+        <div id="life-categories" class="life-categories">
+          <!-- 生活分类将通过JavaScript动态加载 -->
+        </div>
+      </div>
+    </div>
+    <div class="life-right">
+      <div class="life-section">
+        <h2 class="section-title">最新感想</h2>
+        <div id="recent-life-posts" class="recent-posts">
+          <!-- 最新感想将通过JavaScript动态加载 -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+.life-page {
+  min-height: 100vh;
+  padding-bottom: 50px;
+}
+
+.life-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+}
+
+.life-left {
+  order: 1;
+}
+
+.life-right {
+  order: 2;
+}
+
+.life-section {
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 3px solid #f093fb;
+  color: #333;
+}
+
+.recent-posts {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.post-item {
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.post-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-color: #f093fb;
+}
+
+.post-item h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+.post-item .post-meta {
+  color: #999;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.post-item .post-excerpt {
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.life-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.category-item {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 0;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.category-item.active {
+  border-color: #f093fb;
+  box-shadow: 0 2px 8px rgba(240, 147, 251, 0.2);
+}
+
+.category-header {
+  padding: 18px 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.category-header:hover {
+  background: rgba(240, 147, 251, 0.05);
+}
+
+.category-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.category-count {
+  font-size: 0.9rem;
+  color: #999;
+  margin-left: 10px;
+}
+
+.category-icon {
+  font-size: 0.9rem;
+  color: #999;
+  transition: transform 0.3s ease;
+}
+
+.category-item.active .category-icon {
+  transform: rotate(180deg);
+}
+
+.category-posts {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  background: #f9f9f9;
+}
+
+.category-item.active .category-posts {
+  max-height: 2000px;
+}
+
+.category-posts-list {
+  padding: 0 20px 15px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.category-post-item {
+  padding: 12px 15px;
+  background: white;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: block;
+  color: #333;
+}
+
+.category-post-item:hover {
+  border-color: #f093fb;
+  transform: translateX(5px);
+  box-shadow: 0 2px 6px rgba(240, 147, 251, 0.1);
+}
+
+.category-post-item h4 {
+  margin: 0 0 5px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.category-post-item .post-date {
+  font-size: 0.85rem;
+  color: #999;
+}
+
+/* 响应式设计 */
+@media (max-width: 968px) {
+  .life-content {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+  
+  .life-left {
+    order: 1;
+  }
+  
+  .life-right {
+    order: 2;
+  }
+}
+
+[data-theme="dark"] .life-section {
+  background: #2d2d2d;
+  color: white;
+}
+
+[data-theme="dark"] .section-title {
+  color: white;
+}
+
+[data-theme="dark"] .post-item {
+  background: #1a1a1a;
+  border-color: #444;
+}
+
+[data-theme="dark"] .post-item h3 {
+  color: white;
+}
+
+[data-theme="dark"] .post-item .post-excerpt {
+  color: #ccc;
+}
+
+[data-theme="dark"] .category-item {
+  background: #2d2d2d;
+  border-color: #444;
+}
+
+[data-theme="dark"] .category-item.active {
+  border-color: #f093fb;
+}
+
+[data-theme="dark"] .category-header {
+  background: transparent;
+}
+
+[data-theme="dark"] .category-header:hover {
+  background: rgba(240, 147, 251, 0.1);
+}
+
+[data-theme="dark"] .category-name {
+  color: white;
+}
+
+[data-theme="dark"] .category-posts {
+  background: #1a1a1a;
+}
+
+[data-theme="dark"] .category-post-item {
+  background: #2d2d2d;
+  border-color: #444;
+  color: white;
+}
+
+[data-theme="dark"] .category-post-item:hover {
+  border-color: #f093fb;
+}
+
+[data-theme="dark"] .category-post-item h4 {
+  color: white;
+}
+</style>
+<script>
+// 加载最新感想
+document.addEventListener('DOMContentLoaded', function() {
+  loadRecentLifePosts();
+  loadLifeCategories();
+});
+
+function loadRecentLifePosts() {
+  const recentPostsContainer = document.getElementById('recent-life-posts');
+  
+  // 从页面数据中获取最新感想
+  let posts = [];
+  if (typeof window.lifeRecentPosts !== 'undefined') {
+    posts = window.lifeRecentPosts;
+  } else {
+    // 备用示例数据
+    posts = [
+      {
+        title: '生活感想1',
+        date: '2025-12-25',
+        excerpt: '这是生活感想的摘要内容...',
+        url: '/2025/12/25/life1/'
+      }
+    ];
+  }
+  
+  let html = '';
+  if (posts.length === 0) {
+    html = '<p style="text-align: center; color: #999; padding: 20px;">暂无感想</p>';
+  } else {
+    posts.forEach(post => {
+      html += `
+        <div class="post-item" onclick="window.location.href='${post.url}'">
+          <h3>${post.title}</h3>
+          <div class="post-meta">${post.date}</div>
+          <div class="post-excerpt">${post.excerpt || ''}</div>
+        </div>
+      `;
+    });
+  }
+  
+  recentPostsContainer.innerHTML = html;
+}
+
+function loadLifeCategories() {
+  const categoriesContainer = document.getElementById('life-categories');
+  
+  // 从页面数据中获取分类
+  let categories = [];
+  if (typeof window.lifeCategories !== 'undefined') {
+    categories = window.lifeCategories;
+  } else {
+    // 备用示例数据
+    categories = [
+      { 
+        name: '日常', 
+        count: 5,
+        posts: [
+          { title: '日常感想1', date: '2025-12-25', url: '/2025/12/25/daily1/' },
+          { title: '日常感想2', date: '2025-12-24', url: '/2025/12/24/daily2/' }
+        ]
+      },
+      { 
+        name: '旅行', 
+        count: 3,
+        posts: [
+          { title: '旅行感想1', date: '2025-12-23', url: '/2025/12/23/travel1/' }
+        ]
+      },
+      { 
+        name: '思考', 
+        count: 7,
+        posts: [
+          { title: '思考感想1', date: '2025-12-22', url: '/2025/12/22/think1/' }
+        ]
+      }
+    ];
+  }
+  
+  let html = '';
+  if (categories.length === 0) {
+    html = '<p style="text-align: center; color: #999; padding: 20px;">暂无分类</p>';
+  } else {
+    categories.forEach((category, index) => {
+      const postsHtml = category.posts && category.posts.length > 0 
+        ? category.posts.map(post => `
+          <a href="${post.url}" class="category-post-item">
+            <h4>${post.title}</h4>
+            <div class="post-date">${post.date}</div>
+          </a>
+        `).join('')
+        : '<p style="text-align: center; color: #999; padding: 10px;">该分类下暂无文章</p>';
+      
+      html += `
+        <div class="category-item" data-category="${index}">
+          <div class="category-header" onclick="toggleLifeCategory(${index})">
+            <div>
+              <span class="category-name">${category.name}</span>
+              <span class="category-count">(${category.count} 篇)</span>
+            </div>
+            <i class="fas fa-chevron-down category-icon"></i>
+          </div>
+          <div class="category-posts">
+            <div class="category-posts-list">
+              ${postsHtml}
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  }
+  
+  categoriesContainer.innerHTML = html;
+}
+
+function toggleLifeCategory(index) {
+  const categoryItem = document.querySelector(`#life-categories .category-item[data-category="${index}"]`);
+  const isActive = categoryItem.classList.contains('active');
+  
+  // 关闭所有分类
+  document.querySelectorAll('#life-categories .category-item').forEach(item => {
+    item.classList.remove('active');
+  });
+  
+  // 如果当前分类未展开，则展开它
+  if (!isActive) {
+    categoryItem.classList.add('active');
+  }
+}
+</script>
+<script>window.lifeCategories = [];
+window.lifeRecentPosts = [{"title":"Hello World","date":"2025-12-24","excerpt":"Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any pro...","url":"/2025/12/24/hello-world/"}];</script></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 By chenning yin</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.3</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.3"></script><script src="/js/main.js?v=5.5.3"></script><div class="js-pjax"></div><script src="/js/global-nav.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章..." type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.3"></script></div></div></body></html>

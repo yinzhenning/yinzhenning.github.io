@@ -1,0 +1,351 @@
+/* 自定义样式文件 */
+
+/* 确保全局导航栏在所有页面上显示 */
+body {
+  padding-top: 0;
+}
+
+/* 自定义导航菜单样式（集成到Butterfly默认导航栏） */
+#nav #menus .custom-nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-right: 10px;
+}
+
+#nav #menus .nav-search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 200px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+#nav #menus .nav-search-box:focus-within {
+  border-color: #667eea;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+}
+
+#nav #menus .nav-search-input {
+  flex: 1;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #333;
+  box-sizing: border-box;
+}
+
+#nav #menus .nav-search-input::placeholder {
+  color: #999;
+}
+
+#nav #menus .nav-search-btn {
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#nav #menus .nav-search-btn:hover {
+  color: #667eea;
+}
+
+#nav #menus .nav-search-btn i {
+  font-size: 14px;
+}
+
+#nav #menus .nav-search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 8px;
+  max-height: 300px;
+  overflow-y: auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  display: none;
+  z-index: 10001;
+}
+
+#nav #menus .nav-search-results.show {
+  display: block;
+}
+
+#nav #menus .nav-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+#nav #menus .nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  background: transparent;
+  color: #666;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+#nav #menus .nav-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #333;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+#nav #menus .nav-btn i {
+  font-size: 16px;
+}
+
+#nav #menus .search-result-item {
+  padding: 12px 15px;
+  border-bottom: 1px solid #e0e0e0;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#nav #menus .search-result-item:last-child {
+  border-bottom: none;
+}
+
+#nav #menus .search-result-item:hover {
+  background-color: #f5f5f5;
+}
+
+/* 隐藏原来的全局导航栏 */
+#global-nav {
+  display: none !important;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  #nav #menus .custom-nav-menu {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  #nav #menus .nav-search-box {
+    min-width: 150px;
+    flex: 1 1 100%;
+    order: 1;
+  }
+  
+  #nav #menus .nav-buttons {
+    gap: 6px;
+    order: 2;
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+  
+  #nav #menus .nav-btn {
+    width: 32px;
+    height: 32px;
+  }
+  
+  #nav #menus .nav-btn i {
+    font-size: 14px;
+  }
+}
+
+/* 暗色模式支持 */
+[data-theme="dark"] #nav #menus .nav-search-box {
+  background: rgba(30, 30, 30, 0.9);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] #nav #menus .nav-search-box:focus-within {
+  border-color: #667eea;
+}
+
+[data-theme="dark"] #nav #menus .nav-search-input {
+  color: white;
+}
+
+[data-theme="dark"] #nav #menus .nav-search-input::placeholder {
+  color: #999;
+}
+
+[data-theme="dark"] #nav #menus .nav-search-btn {
+  color: #ccc;
+}
+
+[data-theme="dark"] #nav #menus .nav-search-btn:hover {
+  color: #667eea;
+}
+
+[data-theme="dark"] #nav #menus .nav-btn {
+  color: #ccc;
+}
+
+[data-theme="dark"] #nav #menus .nav-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] #nav #menus .nav-search-results {
+  background: #2d2d2d;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] #nav #menus .search-result-item {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] #nav #menus .search-result-item:hover {
+  background-color: #3a3a3a;
+}
+
+[data-theme="dark"] #nav #menus .search-result-item h3 {
+  color: white;
+}
+
+[data-theme="dark"] #nav #menus .search-result-item p {
+  color: #ccc;
+}
+
+/* 首页样式覆盖 */
+#page-header.full_page {
+  height: 100vh;
+}
+
+/* 博客详情页样式优化 */
+.post-content {
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
+
+.post-content h1,
+.post-content h2,
+.post-content h3 {
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+
+.post-content p {
+  margin-bottom: 1.5em;
+}
+
+.post-content code {
+  background: #f5f5f5;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+.post-content pre {
+  background: #2d2d2d;
+  color: #f8f8f2;
+  padding: 20px;
+  border-radius: 10px;
+  overflow-x: auto;
+  margin: 20px 0;
+}
+
+.post-content pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+/* 图片样式 */
+.post-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin: 20px 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* 链接样式 */
+.post-content a {
+  color: #667eea;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.post-content a:hover {
+  border-bottom-color: #667eea;
+}
+
+/* 引用样式 */
+.post-content blockquote {
+  border-left: 4px solid #667eea;
+  padding-left: 20px;
+  margin: 20px 0;
+  color: #666;
+  font-style: italic;
+}
+
+/* 列表样式 */
+.post-content ul,
+.post-content ol {
+  margin: 20px 0;
+  padding-left: 30px;
+}
+
+.post-content li {
+  margin: 10px 0;
+  line-height: 1.8;
+}
+
+/* 表格样式 */
+.post-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.post-content table th,
+.post-content table td {
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+.post-content table th {
+  background: #f5f5f5;
+  font-weight: bold;
+}
+
+/* 暗色模式支持 */
+[data-theme="dark"] .post-content code {
+  background: #1a1a1a;
+  color: #f8f8f2;
+}
+
+[data-theme="dark"] .post-content blockquote {
+  color: #ccc;
+  border-left-color: #667eea;
+}
+
+[data-theme="dark"] .post-content table th {
+  background: #2d2d2d;
+}
+
+[data-theme="dark"] .post-content table th,
+[data-theme="dark"] .post-content table td {
+  border-color: #444;
+}
+
