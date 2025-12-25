@@ -78,16 +78,12 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-VLM-token-剪枝" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-vlm-note" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2025/12/24/VLM-token-%E5%89%AA%E6%9E%9D/" class="article-date">
-  <time class="dt-published" datetime="2025-12-24T14:20:26.000Z" itemprop="datePublished">2025-12-24</time>
+    <a href="/2025/12/25/vlm-note/" class="article-date">
+  <time class="dt-published" datetime="2025-12-25T08:35:00.000Z" itemprop="datePublished">2025-12-25</time>
 </a>
     
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/LLM%E7%A7%91%E7%A0%94%E5%AD%A6%E4%B9%A0/">LLM科研学习</a>
-  </div>
-
   </div>
   <div class="article-inner">
     
@@ -96,7 +92,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/12/24/VLM-token-%E5%89%AA%E6%9E%9D/">VLM token 剪枝</a>
+      <a class="p-name article-title" href="/2025/12/25/vlm-note/">VLM中自适应压缩率的视觉token剪枝</a>
     </h1>
   
 
@@ -104,117 +100,19 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="VLM中自适应压缩率的视觉token剪枝"><a href="#VLM中自适应压缩率的视觉token剪枝" class="headerlink" title="VLM中自适应压缩率的视觉token剪枝"></a>VLM中自适应压缩率的视觉token剪枝</h1><h2 id="研究背景"><a href="#研究背景" class="headerlink" title="研究背景"></a>研究背景</h2><h3 id="文章关注的问题"><a href="#文章关注的问题" class="headerlink" title="文章关注的问题"></a>文章关注的问题</h3><p>VLMs 需融合视觉与文本信息完成问答、图像描述等任务，其输入的token序列N较大，由于VLMs 本身的自回归生成（输出也作为输入） 与注意力二次复杂度（O (N²)） 特性，形成 “叠加放大效应”，使得计算量和内存占用量过大，限制了VLMs的实际应用（高分辨率图像等）。</p>
-<h3 id="现有方法的局限"><a href="#现有方法的局限" class="headerlink" title="现有方法的局限"></a>现有方法的局限</h3><h4 id="非token缩减技术类"><a href="#非token缩减技术类" class="headerlink" title="非token缩减技术类"></a>非token缩减技术类</h4><ul>
-<li>MoELlava 集成混合专家（Mixture of Experts）框架以加速模型运行；</li>
-<li>VL-Mamba探索替代架构来提升效率； </li>
-<li>LLaVA-Phi、mobileVLM采用更小的语言模型，这类模型能在性能损失极小的前提下实现高效运行。</li>
-<li>此外，剪枝 、量化、知识蒸馏等压缩技术也被广泛用于减少模型参数数量。</li>
-</ul>
-<p>局限性：需要修改模型架构或参数，不便于后续开发</p>
-<p>相比之下，token缩减技术无需改变模型架构，仅通过精简token序列即可解决 VLMs 的二次复杂度问题。</p>
-<h4 id="token缩减技术"><a href="#token缩减技术" class="headerlink" title="token缩减技术"></a>token缩减技术</h4><ul>
-<li>视觉编码器层面：LLaVA-PruMerge、MADTP  等提出自适应方法减少视觉token，在大幅降低token数量的同时，保持与原始模型相当的性能；</li>
-<li>跨模态投影层层面：Tokenpacker  优化文本与视觉信息的连接桥梁，以最小化视觉token数量；</li>
-<li>推理阶段层面：FastV一文发现，视觉token在解码器第二层之后获得的关注度会降低，因此选择在推理过程中直接移除冗余视觉token，在不影响性能的前提下降低计算需求；VTW 发现视觉token在 VLMs 深层中的作用并不显著，因此策略性地从特定层中移除所有视觉token，仅允许文本token参与后续处理。</li>
-</ul>
-<p>局限性：</p>
-<ul>
-<li>FastV等方法按预定义的压缩率删除冗余视觉token，而这里的<strong>压缩率需要手动指定</strong>。而手动选择合适的压缩率并非易事，通常需要专家级的领域知识。</li>
-<li>预定义的<strong>压缩率是一个固定值</strong>，而实验证明（如下图），随着模型生成过程的推进，视觉令牌的重要性会逐渐降低。根据生成过程中变化的注意力分布动态调整压缩率会是一种更好的选择，这也是本文最大的创新点。</li>
-</ul>
-<p><img src="https://ncnfletd6kpg.feishu.cn/space/api/box/stream/download/asynccode/?code=ZjU5MWRlY2U4ZDFjOTgxM2MzOTk5NmMxMzlkODAyN2FfZ3Z1RlZOY2EyUlhkTzczSmdGZmh2bWU0cGNnN1lDR29fVG9rZW46T0pTbGJ5cmhyb2xaM3d4ampISWNXVWdMbkl5XzE3NjY1ODYzNzY6MTc2NjU4OTk3Nl9WNA" alt="img"></p>
-<p>实验结果表明：随着模型生成的令牌数量增多，其注意力会向响应令牌倾斜，而对视觉令牌的关注度逐渐降低，这意味着视觉令牌的冗余性不断增加。</p>
-<p>根据信息流理论（少量 “锚定令牌”（anchor tokens）聚合了所有输入令牌的信息，而模型在深层网络中更倾向于关注这些锚定令牌），生成过程中图像令牌的大量信息会聚合到响应令牌中。这种信息聚合导致视觉令牌之间产生额外冗余 —— 大量视觉令牌仅提供极少有效信息，造成计算资源的浪费。</p>
-<h2 id="本文方法"><a href="#本文方法" class="headerlink" title="本文方法"></a>本文方法</h2><h3 id="整体框架"><a href="#整体框架" class="headerlink" title="整体框架"></a>整体框架</h3><p><img src="https://ncnfletd6kpg.feishu.cn/space/api/box/stream/download/asynccode/?code=NTBhNmZhY2QxMjkxZmZlMjFlMWNlZmZkZmJiMzRhMmRfTHFtNVgwS2JFRTI1OGNwRlRDQ0xHR1E2NmpNblNDWWxfVG9rZW46VFBDVGJqVGVQb0hlYWx4T2VRaGNqS2RDbnBiXzE3NjY1ODYzNzY6MTc2NjU4OTk3Nl9WNA" alt="img"></p>
-<p>总体采用端到端的训练。</p>
-<h3 id="动态剪枝模块"><a href="#动态剪枝模块" class="headerlink" title="动态剪枝模块"></a>动态剪枝模块</h3><p>将输入的token分为四类：</p>
-<ul>
-<li>系统提示(sys)</li>
-<li>图像(img)</li>
-<li>用户指令(ins)</li>
-<li>响应(res)</li>
-</ul>
-<p><img src="https://ncnfletd6kpg.feishu.cn/space/api/box/stream/download/asynccode/?code=Njk3ZWI4MmRmNGM3OTViYzZlOWY0ZjNkYjNmZTg3MzNfU21JRGRpVmF6Yk0zQzFGUXlHd0RKMTRUcnNoT3VhS2pfVG9rZW46S0hpTWJqbnQxb0NTV0x4akpTd2NvcDhpbkxmXzE3NjY1ODYzNzY6MTc2NjU4OTk3Nl9WNA" alt="img"></p>
-<p>假定视觉令牌的冗余度与上述四种token的注意力分布密切相关，在模型生成的每一轮迭代，收集所有注意力头对 sys、img、ins、res 四类 token 的注意力权重，将这些权重统计为 “四类 token 的关注占比向量”（如 img 占比 30%、res 占比 60%、sys 占比 5%、ins 占比 5%），同时将img类中的每个token按注意力权重排序。</p>
-<p>将占比向量作为训练输入，输出压缩率的概率分布，选择概率值最大的reduction rate作为采纳值R。</p>
-<p>然后以R的比率去除img类中注意力权重较低的token，得到最终的img token。</p>
-<p>即：对于每一组 token类占比四元组（也即每一次迭代），都有一个压缩率与之对应，实现了动态视觉token剪枝的效果。</p>
-<h3 id="可微压缩率"><a href="#可微压缩率" class="headerlink" title="可微压缩率"></a>可微压缩率</h3><p>目的：为了能使梯度回传，进行端到端训练，采样和掩码操作会丧失可微性。</p>
-<p>1）将压缩率 $$R$$ 离散化为$$\mathcal{R}:{0,\frac{1}{K},\frac{2}{K},\dots,\frac{K-1}{K}}$$</p>
-<ol start="2">
-<li>为每一个 $$R_i$$ 配备一个掩码向量$$M_i&#x3D;[1,1,1,\dots,0]$$</li>
-</ol>
-<p>$$M_0&#x3D;<a href="r=0">1,\dots,1,1,1</a> \[10pt] M_1&#x3D;<a href="r=%5Cfrac%7B1%7D%7BK%7D">1,\dots,1,0,0</a> \[10pt] M_2&#x3D;<a href="r=%5Cfrac%7B2%7D%7BK%7D">1,\dots,0,0,0</a> \[10pt] \dots \[10pt] M_K&#x3D;<a href="r=%5Cfrac%7BK-1%7D%7BK%7D">0,\dots,0,0,0</a>$$</p>
-<ol start="3">
-<li>给一个描述4类token分布的特征向量，经过classifier，输出一个概率分布$$\pi_R$$,</li>
-</ol>
-<p>再将$$\pi_R$$送入$$ Gumbel−Softmax(\pi_R)$$,得到如下软化的概率分布</p>
-<p>$$P(r&#x3D;0)&#x3D;p_1 \[10pt] P(r&#x3D;\frac{1}{K})&#x3D;p_2 \[10pt] P(r&#x3D;\frac{2}{K})&#x3D;p_3 \[10pt] \dots \[10pt] P(r&#x3D;\frac{K-1}{K})&#x3D;p_K$$</p>
-<p>4)加权求和得到最终的掩码向量：</p>
-<p>$$M&#x3D;\sum M_i\cdot p_{i+1}$$</p>
-<p>$$M$$与image token特征向量相乘得到最终剪枝后的结果</p>
-<h2 id="实验结果分析"><a href="#实验结果分析" class="headerlink" title="实验结果分析"></a>实验结果分析</h2><h3 id="对比实验"><a href="#对比实验" class="headerlink" title="对比实验"></a>对比实验</h3><h4 id="视觉问答任务与短响应任务"><a href="#视觉问答任务与短响应任务" class="headerlink" title="视觉问答任务与短响应任务"></a>视觉问答任务与短响应任务</h4><p>从上到下分为三个对比区域：</p>
-<ul>
-<li>早期 “独立设计型” VLM</li>
-<li>基于 LLaVA 生态的 “开源衍生型” VLM</li>
-<li>“令牌优化型” VLM</li>
-</ul>
-<p><img src="https://ncnfletd6kpg.feishu.cn/space/api/box/stream/download/asynccode/?code=NjY3YjRjNzA5N2I4ZjMzNzBjMWI1MWM3MmE5NGQ4NDBfTzc5QjBRdkJwaVVYRVAwSXhXd2p6YmJ5Mlh2b08wbGtfVG9rZW46SmhyMWJuMGFBbzhhVnV4dG4xcGN0RHRTblFDXzE3NjY1ODYzNzY6MTc2NjU4OTk3Nl9WNA" alt="img"></p>
-<p>视觉问答任务benchmark：</p>
-<ul>
-<li>GQA(复杂结构化推理)：与传统模型匹敌</li>
-<li>VisWiz(视觉障碍辅助、细粒度细节):比FastV弱，但已经很好</li>
-<li>SQA (多轮序列式推理)：与传统模型匹敌</li>
-<li>VQA v2 (通用视觉问答)：偏弱（文章好像标错了）</li>
-<li>POPE(衡量模型物体幻觉)：优于传统模型，很强</li>
-<li>MMB（对象级感知任务）：与传统模型匹敌</li>
-<li>MME(多模态综合能力)：与传统模型匹敌</li>
-</ul>
-<h4 id="图像描述任务"><a href="#图像描述任务" class="headerlink" title="图像描述任务"></a>图像描述任务</h4><p><img src="https://ncnfletd6kpg.feishu.cn/space/api/box/stream/download/asynccode/?code=YjMxY2ZmOGY4MzI2ZTUwOWQ1NzU3MjI5NTMwOWRlYzFfSG43aW5UYVZBaGRXU1lrNlNhN2w1SjJ1WHc4NnFWVnJfVG9rZW46QndxV2JmVjFwb1pFMWJ4djBjNGNTRmtKbmZiXzE3NjY1ODYzNzY6MTc2NjU4OTk3Nl9WNA" alt="img"></p>
-<p>DyRate方法在图像描述任务上优于不剪枝和其他token剪枝方法</p>
-<h4 id="复杂场景描述任务"><a href="#复杂场景描述任务" class="headerlink" title="复杂场景描述任务"></a>复杂场景描述任务</h4><p><img src="https://ncnfletd6kpg.feishu.cn/space/api/box/stream/download/asynccode/?code=OGJkYzVhMjIyNDQ1MTQ0MDE1NjIxZDQ5MDUzZmVhZWJfd05NN0VCQjhMQWZDbWlqQUpVMzA3bjlvV2ZwVDRCSE5fVG9rZW46RkpoZWJFNVlYb1FrVTF4RVlOb2NKelFTbnhiXzE3NjY1ODYzNzY6MTc2NjU4OTk3Nl9WNA" alt="img"></p>
-<p>TFLOPs(算法复杂度)和延迟:均最低</p>
-<p>理解能力：最高</p>
-<p>综上，对比实验表明，DyRate方法剪枝token后的模型不仅降低了计算开销，理解能力在大部分指标下依旧保持甚至略有提升。总体效果不逊色于FastV方法。</p>
-<h3 id="消融实验"><a href="#消融实验" class="headerlink" title="消融实验"></a>消融实验</h3><h3 id="压缩率策略："><a href="#压缩率策略：" class="headerlink" title="压缩率策略："></a>压缩率策略：</h3><p>消融实验探究了不同剪枝策略对 VLMs 性能的影响，为保证对比有效性，剪枝层数设置为 K&#x3D;3（与 FastV 一致）。</p>
-<p>固定压缩率策略（FixedPrune, FP）：</p>
-<p> $$C_{retrain}$$&#x3D;$$1-R$$ </p>
-<p>基于层深度动态调整压缩率的策略（DepthBasedPrune, DP）：</p>
-<ul>
-<li>当$$L_{index}≤4$$（前 4 层）：$$H(L_{index}−4)$$&#x3D;0，因此 $$C_{retrain}$$&#x3D;1 → 不剪枝，保留所有视觉令牌。</li>
-<li>当 $$L_{index}&gt;4$$（第 5 层及更深层），$$H(L_{index}−4)$$，因此 $$C_{retrain}&#x3D;1-P_{prune4th}-R’$$→ 从第 5 层开始，按照 “第 4 层剪枝比例 + 修正比例” 来剪枝，保留的令牌比例减少。</li>
-</ul>
-<p><img src="https://ncnfletd6kpg.feishu.cn/space/api/box/stream/download/asynccode/?code=Zjk2YzdkNTk0Yjc2NWE5MzRmNGM2YjViMWI0ZjFlMTVfcGZsempMeWI5VGp2WERQUXVmNFBabENiOW5xdzJHc0JfVG9rZW46VXZEcWJnbWRlbzhWR1J4ZnFmYWNaellqbmVlXzE3NjY1ODYzNzY6MTc2NjU4OTk3Nl9WNA" alt="img"></p>
-<p>（怀疑FP和DP是不是弄反了）</p>
-<p>说明较大数目的剪枝不影响性能。</p>
-<h3 id="解码参数"><a href="#解码参数" class="headerlink" title="解码参数"></a>解码参数</h3><p>Greedy（只选择模型预测概率最高的那个词）</p>
-<p>Beem-K（Top-K 个概率最高的候选词序列）</p>
-<p>top p（先将所有候选词按概率从高到低排序，再累积概率直到达到阈值p，仅从这个 “概率核” 中随机采样下一个词。）</p>
-<p><img src="https://ncnfletd6kpg.feishu.cn/space/api/box/stream/download/asynccode/?code=YzVhMmIwOWQwZTZkY2EyYTkxYWJiZjg4YjgyZWI2MzFfTU9Nb0VZWkZRMUxPV2hta2pVMXBZQlRudEFkcEZWQmVfVG9rZW46U0JlN2JvNklTb1VmOTN4UU13R2Mxa3J5bnJnXzE3NjY1ODYzNzY6MTc2NjU4OTk3Nl9WNA" alt="img"></p>
-<p>top_p策略最优</p>
-<h2 id="一些想法"><a href="#一些想法" class="headerlink" title="一些想法"></a>一些想法</h2><p>没有一些成体系的想法，就把读论文时的一些杂念写进去了。</p>
-<p>感觉这篇论文就是FastV这篇的基础上做了改进，打破了FastV模式固定剪枝层数和剪枝率的做法，用一个分类器去”软化”这两个参量的选取，使其更接近最优解。</p>
-<p>Img token注意力的衰减是一个时序过程，但不是一直单调下降的。</p>
-<ul>
-<li><p>采用简单的分类器剪枝的整个过程相当于一个函数：</p>
-</li>
-<li><p>$$f(i_{th}\ token \ distribution)\rightarrow {(i+1)}_{th}\ token \ distribution$$</p>
-</li>
-<li><p>多层迭代：</p>
-</li>
-<li><p>$$f(f(\dots f(1_{th}\ token \ distribution)))\rightarrow final\ token \ distribution$$</p>
-</li>
-<li><p>只考虑上一轮迭代的distribution，倾向于将image token占比低的distribution反馈为image token占比更加低的distribution。</p>
-</li>
-<li><p>是不是可以考虑用一个RNN这种时序性的预测器，考虑过去 N 步的注意力分布向量会更好一点？</p>
-</li>
-</ul>
+        
+
+	<div class="row">
+    <embed src="./vlm-note.pdf" width="100%" height="550" type="application/pdf">
+	</div>
+
+
+
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://yinzhenning.github.io/2025/12/24/VLM-token-%E5%89%AA%E6%9E%9D/" data-id="cuidNYHNMRR19jUsvLqOW5fBH" data-title="VLM token 剪枝" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://yinzhenning.github.io/2025/12/25/vlm-note/" data-id="cuid_4i2Me05zsB10GiWqEx6R" data-title="VLM中自适应压缩率的视觉token剪枝" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -249,23 +147,24 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
+<h2 id="Quick-Start">Quick Start</h2>
+<h3 id="Create-a-new-post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
+<h3 id="Run-server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
+<h3 id="Generate-static-files">Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
+<h3 id="Deploy-to-remote-sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://yinzhenning.github.io/2025/12/24/hello-world/" data-id="cuidgdOme-Nma9livQ8jmbenf" data-title="Hello World" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://yinzhenning.github.io/2025/12/24/hello-world/" data-id="cuidy0yUahUKXiY2a0sev4eTY" data-title="Hello World" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -284,13 +183,6 @@
           <aside id="sidebar">
   
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">分类</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/LLM%E7%A7%91%E7%A0%94%E5%AD%A6%E4%B9%A0/">LLM科研学习</a></li></ul>
-    </div>
-  </div>
-
 
   
     
@@ -315,7 +207,7 @@
       <ul>
         
           <li>
-            <a href="/2025/12/24/VLM-token-%E5%89%AA%E6%9E%9D/">VLM token 剪枝</a>
+            <a href="/2025/12/25/vlm-note/">VLM中自适应压缩率的视觉token剪枝</a>
           </li>
         
           <li>
