@@ -237,6 +237,7 @@
   font-size: 3.5rem;
   font-weight: 700;
   margin: 0 0 20px 0;
+  color: white !important;
   text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
   letter-spacing: 2px;
   line-height: 1.2;
