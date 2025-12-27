@@ -357,8 +357,3 @@ body {
 .card-widget.card-info .site-data > a[href="/categories/"] {
   display: none !important;
 }
-
-/* 2. 调整剩余两项（文章、标签）的宽度，使其平分各占 50% */
-.card-widget.card-info .site-data > a {
-  width: 50%; 
-}
