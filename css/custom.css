@@ -349,3 +349,16 @@ body {
   border-color: #444;
 }
 
+/* =========================== */
+/* 新增：隐藏侧边栏个人卡片中的“分类”统计 */
+/* =========================== */
+
+/* 1. 隐藏指向 /categories/ 的链接（即“分类”那一项） */
+.card-widget.card-info .site-data > a[href="/categories/"] {
+  display: none !important;
+}
+
+/* 2. 调整剩余两项（文章、标签）的宽度，使其平分各占 50% */
+.card-widget.card-info .site-data > a {
+  width: 50%; 
+}
